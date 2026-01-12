@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pediatric Asthma Action Plan</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="page-header no-print">
+    <div>
+      <h1>Pediatric Asthma Action Plan</h1>
+      <p class="muted">Fill, save, and print. Data is stored locally in this browser.</p>
+    </div>
+    <div class="header-actions">
+      <button id="btnSave" type="button">Save</button>
+      <button id="btnClear" type="button" class="secondary">Clear</button>
+      <button id="btnPrint" type="button" class="primary">Print</button>
+    </div>
+  </header>
+
+  <main class="sheet" id="sheet">
+    <section class="card">
+      <h2>Child & Clinic Info</h2>
+      <div class="grid">
+        <label>Child name
+          <input data-key="childName" placeholder="e.g., Jane Doe" />
+        </label>
+        <label>DOB
+          <input data-key="dob" placeholder="MM/DD/YYYY" />
+        </label>
+        <label>Parent/guardian
+          <input data-key="guardian" placeholder="Name" />
+        </label>
+        <label>Phone
+          <input data-key="phone" placeholder="(###) ###-####" />
+        </label>
+        <label>Clinician / clinic
+          <input data-key="clinic" placeholder="Name / clinic" />
+        </label>
+        <label>Clinic phone
+          <input data-key="clinicPhone" placeholder="(###) ###-####" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Triggers</h2>
+      <p class="muted">Record your child’s known asthma triggers.</p>
+      <textarea data-key="triggers" rows="3" placeholder="e.g., viral colds, smoke, pets, dust, exercise, pollen..."></textarea>
+    </section>
+
+    <section class="card">
+      <h2>Peak Flow</h2>
+      <div class="grid grid-3">
+        <label>Personal best peak flow
+          <input data-key="pbest" id="pbest" inputmode="numeric" placeholder="e.g., 320" />
+        </label>
+        <label>Current peak flow (optional)
+          <input data-key="pcurrent" id="pcurrent" inputmode="numeric" placeholder="e.g., 250" />
+        </label>
+        <div class="calc">
+          <div class="calc-label">Zone from current value</div>
+          <div id="zoneBadge" class="badge badge-neutral">—</div>
+          <div class="muted small" id="zoneHelp">Enter personal best + current to auto-calc.</div>
+        </div>
+      </div>
+      <div class="thresholds">
+        <div><strong>Green:</strong> ≥ <span id="greenCut">—</span> (≥80% personal best)</div>
+        <div><strong>Yellow:</strong> <span id="yellowLow">—</span> to <span id="yellowHigh">—</span> (50–79%)</div>
+        <div><strong>Red:</strong> &lt; <span id="redCut">—</span> (&lt;50%)</div>
+      </div>
+    </section>
+
+    <section class="card zone zone-green">
+      <div class="zone-head">
+        <div class="zone-dot green"></div>
+        <div>
+          <h2>Green Zone — Good</h2>
+          <p class="muted">Asthma is under control.</p>
+        </div>
+      </div>
+
+      <ul>
+        <li>No coughing or wheezing, even while playing.</li>
+        <li>Sleeps through the night.</li>
+        <li>Breathing well.</li>
+        <li>Peak flow is <strong>above</strong> <span class="pf green" data-fill="greenCutText">—</span> (≥80% of personal best).</li>
+      </ul>
+
+      <h3>Daily controller medicines</h3>
+      <div class="grid meds">
+        <label>Controller medicine #1 + dose
+          <input data-key="g_ctrl1" placeholder="e.g., Fluticasone HFA 44 mcg: 2 puffs BID" />
+        </label>
+        <label>Controller medicine #2 + dose
+          <input data-key="g_ctrl2" placeholder="" />
+        </label>
+        <label>Controller medicine #3 + dose
+          <input data-key="g_ctrl3" placeholder="" />
+        </label>
+        <label>Controller medicine #4 + dose
+          <input data-key="g_ctrl4" placeholder="" />
+        </label>
+      </div>
+
+      <h3>Before exercise (rescue)</h3>
+      <label>
+        <input data-key="g_exercise" placeholder="e.g., Albuterol 2 puffs 15 minutes before activity" />
+      </label>
+
+      <p class="callout">
+        Call your child’s health care provider if rescue medicine is needed more than 2–3 times per week.
+      </p>
+    </section>
+
+    <section class="card zone zone-yellow">
+      <div class="zone-head">
+        <div class="zone-dot yellow"></div>
+        <div>
+          <h2>Yellow Zone — Caution</h2>
+          <p class="muted">Symptoms may be getting worse.</p>
+        </div>
+      </div>
+
+      <p>May include:</p>
+      <ul>
+        <li>Waking from sleep</li>
+        <li>Coughing (night or early morning)</li>
+        <li>Mild wheezing</li>
+        <li>Chest tightness</li>
+        <li>Peak flow <strong><span class="pf yellow" data-fill="yellowLowText">—</span></strong> to <strong><span class="pf yellow" data-fill="yellowHighText">—</span></strong> (50–79%).</li>
+      </ul>
+
+      <h3>Add to daily medicines</h3>
+      <div class="grid">
+        <label>Reliever/rescue medicine + dose
+          <input data-key="y_rescue" placeholder="e.g., Albuterol 2–4 puffs q4h PRN wheeze" />
+        </label>
+        <label>Additional medicine + dose
+          <input data-key="y_additional" placeholder="e.g., Oral steroid per clinician plan" />
+        </label>
+      </div>
+
+      <h3>Call your child’s health care provider if:</h3>
+      <div class="grid grid-2">
+        <label>Child remains in yellow zone for ___ hours
+          <input data-key="y_hours" inputmode="numeric" placeholder="e.g., 24" />
+        </label>
+        <div class="muted small">
+          Also call if rescue medicine is needed more than 2–3 times per week.
+        </div>
+      </div>
+    </section>
+
+    <section class="card zone zone-red">
+      <div class="zone-head">
+        <div class="zone-dot red"></div>
+        <div>
+          <h2>Red Zone — Warning</h2>
+          <p class="muted">Needs medical help right away.</p>
+        </div>
+      </div>
+
+      <p>Your child may be in the red zone if:</p>
+      <ul>
+        <li>Breathing hard and fast</li>
+        <li>Nose opens wide; ribs/neck muscles pull in</li>
+        <li>Lips/fingers/toes look bluish</li>
+        <li>Trouble speaking in full sentences</li>
+        <li>Peak flow is <strong>less than</strong> <strong><span class="pf red" data-fill="redCutText">—</span></strong> (&lt;50%).</li>
+        <li>Symptoms don’t improve within 15–20 minutes after rescue medicine (bronchodilator)</li>
+      </ul>
+
+      <div class="danger">
+        <p><strong>This is an emergency.</strong> Do not wait to see if symptoms go away. Get medical help right away (call 911 in the U.S.).</p>
+        <div class="grid grid-2">
+          <label>Rescue instructions (what to do now)
+            <input data-key="r_now" placeholder="e.g., Albuterol 4–6 puffs now; repeat q15–20 min until help arrives" />
+          </label>
+          <label>Nebulizer / inhaler step
+            <input data-key="r_neb" placeholder="e.g., Start neb OR 2–4 puffs MDI w/ spacer; repeat q15–20 min" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>School Permission Slip</h2>
+      <div class="grid grid-3">
+        <label>Date
+          <input data-key="schoolDate" placeholder="MM/DD/YYYY" />
+        </label>
+        <label>Student may use reliever/rescue medicine at school
+          <input data-key="schoolMed" placeholder="e.g., Albuterol inhaler with spacer" />
+        </label>
+        <div></div>
+      </div>
+
+      <div class="grid grid-2 signatures">
+        <label>Parent/guardian signature
+          <input data-key="parentSig" placeholder="Printed name / signature" />
+        </label>
+        <label>Health care provider signature
+          <input data-key="providerSig" placeholder="Printed name / signature" />
+        </label>
+      </div>
+
+      <div class="muted small">
+        This document is not intended to replace advice given by your health care provider.
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div class="muted small">
+        Sources for more info: CDC, American Lung Association.
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
